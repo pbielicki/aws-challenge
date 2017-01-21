@@ -103,7 +103,7 @@ public class ChallengeLambda {
       UserEvent userEvent;
       try {
         userEvent = new ObjectMapper()
-        		.readValue(((Map<String, String>) record.get(SNS)).get(SNS_MESSAGE), UserEvent.class);
+            .readValue(((Map<String, String>) record.get(SNS)).get(SNS_MESSAGE), UserEvent.class);
       } catch (Exception e) {
         throw new IllegalArgumentException("Unable to parse Message", e);
       }
@@ -122,7 +122,7 @@ public class ChallengeLambda {
       // we don't check for duplicates
       events.add(userEvent.toEventMap());
       item = new Item().withPrimaryKey(EMAIL, userEvent.getEmail())
-      		.withString(NAME, userEvent.getName())
+          .withString(NAME, userEvent.getName())
           .withLong(OLDEST_EVENT_TIMESTAMP, timestamp)
           .withList(EVENTS, events);
       
@@ -145,9 +145,9 @@ public class ChallengeLambda {
       StringBuilder sb = new StringBuilder(String.format(getString(EMAIL_MSG_HI), item.getString(NAME)));
       List<Map<String, Object>> events = item.getList(EVENTS);
       events.forEach(
-      		e -> sb.append(String.format(getString(EMAIL_MSG_LINE),
-      						format.format(new Date(((BigDecimal) e.get(TIMESTAMP)).longValue())),
-      						e.get(MESSAGE)))
+          e -> sb.append(String.format(getString(EMAIL_MSG_LINE),
+                  format.format(new Date(((BigDecimal) e.get(TIMESTAMP)).longValue())),
+                  e.get(MESSAGE)))
       );
       
       userEmailTable.putItem(new Item()

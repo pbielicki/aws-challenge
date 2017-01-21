@@ -12,64 +12,64 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserEvent {
-	@JsonProperty("name")
-	private String name;
-	@JsonProperty("message")
-	private String message;
-	@JsonProperty("timestamp")
-	private String timestamp;
-	@JsonProperty("email")
-	private String email;
+  @JsonProperty("name")
+  private String name;
+  @JsonProperty("message")
+  private String message;
+  @JsonProperty("timestamp")
+  private String timestamp;
+  @JsonProperty("email")
+  private String email;
 
-	@SuppressWarnings("serial")
-	public Map<String, Object> toEventMap() {
-		return new LinkedHashMap<String, Object>() {
-			{
-				try {
-					put(TIMESTAMP, new SimpleDateFormat(INPUT_PATTERN).parse(timestamp).getTime());
-				} catch (ParseException e) {
-					throw new IllegalArgumentException(
-		          "Unable to parse timestamp [" + timestamp + "] with [" + INPUT_PATTERN + "] pattern");
-				}
-				put(MESSAGE, message);
-			}
-		};
-	}
+  @SuppressWarnings("serial")
+  public Map<String, Object> toEventMap() {
+    return new LinkedHashMap<String, Object>() {
+      {
+        try {
+          put(TIMESTAMP, new SimpleDateFormat(INPUT_PATTERN).parse(timestamp).getTime());
+        } catch (ParseException e) {
+          throw new IllegalArgumentException(
+              "Unable to parse timestamp [" + timestamp + "] with [" + INPUT_PATTERN + "] pattern");
+        }
+        put(MESSAGE, message);
+      }
+    };
+  }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-	public void setMessage(String message) {
-		this.message = message;
-	}
+  public void setMessage(String message) {
+    this.message = message;
+  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+  public void setName(String name) {
+    this.name = name;
+  }
 
-	public void setTimestamp(String timestamp) {
-		this.timestamp = timestamp;
-	}
+  public void setTimestamp(String timestamp) {
+    this.timestamp = timestamp;
+  }
 
-	public String getEmail() {
-		return email;
-	}
+  public String getEmail() {
+    return email;
+  }
 
-	public String getMessage() {
-		return message;
-	}
+  public String getMessage() {
+    return message;
+  }
 
-	public String getTimestamp() {
-		return timestamp;
-	}
+  public String getTimestamp() {
+    return timestamp;
+  }
 
-	public String getName() {
-		return name;
-	}
+  public String getName() {
+    return name;
+  }
 
-	@Override
-	public String toString() {
-		return "UserEvent{email=" + email + ",name=" + name + ",timestamp=" + timestamp + ",message=" + message + "}";
-	}
+  @Override
+  public String toString() {
+    return "UserEvent{email=" + email + ",name=" + name + ",timestamp=" + timestamp + ",message=" + message + "}";
+  }
 }
