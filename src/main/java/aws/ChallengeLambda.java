@@ -16,6 +16,7 @@ import static aws.Util.NAME;
 import static aws.Util.NOTIFICATION_DELAY;
 import static aws.Util.OLDEST_EVENT_TIMESTAMP;
 import static aws.Util.OUTPUT_PATTERN;
+import static aws.Util.RECORDS;
 import static aws.Util.REGION;
 import static aws.Util.SNS;
 import static aws.Util.SNS_MESSAGE;
@@ -97,8 +98,9 @@ public class ChallengeLambda {
   }
 
   @SuppressWarnings("unchecked")
-  public void handleUserEvent(List<Map<String, Object>> request, Context context) {
+  public void handleUserEvent(Map<String, Object> req, Context context) {
     Table userEventTable = dynamoDB.getTable(TABLE_USER_EVENT);
+    List<Map<String, Object>> request = (List<Map<String, Object>>) req.get(RECORDS);
     request.forEach(record -> {
       UserEvent userEvent;
       try {

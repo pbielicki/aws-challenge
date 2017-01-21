@@ -20,6 +20,7 @@ public class Util {
   public static final String NOTIFICATION_DELAY = "NOTIFICATION_DELAY";
   public static final String OLDEST_EVENT_TIMESTAMP = "oldestEventTimestamp";
   public static final String OUTPUT_PATTERN = "EEEE, HH:mm";
+  public static final String RECORDS = "Records";
   public static final String REGION = "REGION";
   public static final String SNS = "Sns";
   public static final String SNS_MESSAGE = "Message";
