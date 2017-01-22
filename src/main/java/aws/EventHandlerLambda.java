@@ -68,7 +68,7 @@ public class EventHandlerLambda extends AbstractLambda {
           .withLong(OLDEST_EVENT_TIMESTAMP, timestamp)
           .withList(EVENTS, events);
       
-      LOG.info("Putting item for [" + userEvent.getEmail() + "]");
+      LOG.info("Putting item for [" + userEvent.getEmail() + "] into " + TABLE_USER_EVENT);
       userEventTable.putItem(item);
     });
   }
