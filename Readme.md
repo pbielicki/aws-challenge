@@ -1,3 +1,13 @@
+### Technical constraints
+
+* No throttling of messages per user - can cause OOM
+* No message size verification - can cause OOM
+* Working in AWS sandbox thus not able to send email to any recipient - only to verified ones
+* Sending email notification in scheduled mode - not immediately after collecting the digest
+* Retrying email send after 10 minutes infinitely or until next digest overwrites the old one
+* No email notification max retry / retention / throttling - can blow up DynamoDB with millions of users
+* Your observation goes here... :)
+
 ## Clone and build project
 
 ~~~~
@@ -75,7 +85,7 @@ aws lambda create-function \
 
 ~~~~
 aws events put-rule --schedule-expression 'rate(10 minutes)' --name every_10_minutes
-~~~
+~~~~
 
 ~~~~
 aws lambda add-permission \
@@ -107,4 +117,29 @@ aws lambda add-permission \
 --action 'lambda:InvokeFunction' \
 --principal events.amazonaws.com \
 --source-arn [scheduled-rule-arn]
+~~~~
+
+## Apply Identity Policies for each "To" email address that will be used (if AWS sandboxed account)
+
+In sandbox AWS account, you not only have to validate each "From" email address but also you need
+to allow your code (Lambda in our case) to send email "To" specific email addresses by
+applying relevant Identity Policies in [SES management console](https://console.aws.amazon.com/ses).
+
+Example of policy:
+
+~~~~
+{
+    "Version": "2008-10-17",
+    "Statement": [
+        {
+            "Sid": "stmt1485113930894",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:sts::[account-no]:[lambda-runner-role]/NotificationSender"
+            },
+            "Action": "ses:SendEmail",
+            "Resource": "arn:aws:ses:eu-west-1:817181745424:identity/example@email.com"
+        }
+    ]
+}
 ~~~~
