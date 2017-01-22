@@ -9,9 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class UserEvent {
+  private static final Log LOG = LogFactory.getLog(UserEvent.class);
+
   @JsonProperty("name")
   private String name;
   @JsonProperty("message")
@@ -28,8 +33,11 @@ public class UserEvent {
         try {
           put(TIMESTAMP, new SimpleDateFormat(INPUT_PATTERN).parse(timestamp).getTime());
         } catch (ParseException e) {
+          LOG.error(
+              "Unable to parse timestamp [" + timestamp + "] with [" + INPUT_PATTERN + "] pattern", e);
+          
           throw new IllegalArgumentException(
-              "Unable to parse timestamp [" + timestamp + "] with [" + INPUT_PATTERN + "] pattern");
+              "Unable to parse timestamp [" + timestamp + "] with [" + INPUT_PATTERN + "] pattern", e);
         }
         put(MESSAGE, message);
       }

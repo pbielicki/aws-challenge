@@ -8,12 +8,14 @@ import com.amazonaws.regions.Regions;
 public class Util {
   public static final String CREATED = "created";
   public static final String DEFAULT_FROM_EMAIL = "pbielicki@gmail.com";
+  public static final String DEFAULT_MAX_RESULT_SIZE = "100";
   public static final String DEFAULT_NOTIFICATION_DELAY = "60"; // minutes  
   public static final String DEFAULT_REGION = Regions.US_WEST_2.getName();
   public static final String EMAIL = "email";
   public static final String EVENTS = "events";
   public static final String FROM_EMAIL = "FROM_EMAIL";
   public static final String INPUT_PATTERN = "yyyy-MM-dd'T'HH:mm:ss";
+  public static final String MAX_RESULT_SIZE = "MAX_RESULT_SIZE";
   public static final String MESSAGE = "message";
   public static final long MINUTE = 1000L * 60L;
   public static final String NAME = "name";
