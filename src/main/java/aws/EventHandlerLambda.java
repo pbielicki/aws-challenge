@@ -23,9 +23,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import aws.model.UserEvent;
 
-public class UserEventLambda extends AbstractLambda {
+public class EventHandlerLambda extends AbstractLambda {
 
-  private static final Log LOG = LogFactory.getLog(UserEventLambda.class);
+  private static final Log LOG = LogFactory.getLog(EventHandlerLambda.class);
   
   @SuppressWarnings("unchecked")
   public void handleEvent(Map<String, Object> req, Context context) {
