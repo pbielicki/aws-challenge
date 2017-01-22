@@ -1,5 +1,6 @@
 ### Technical constraints
 
+* No Unit Tests! well - no time
 * No throttling of messages per user - can cause OOM
 * No message size verification - can cause OOM
 * No verification for duplicate messages - can easily cause OOM
