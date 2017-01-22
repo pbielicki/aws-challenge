@@ -13,12 +13,12 @@ import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 
 public abstract class AbstractLambda {
 
-	protected final Region region;
-	protected final DynamoDB dynamoDB;
-	protected final int maxResultSize;
+  protected final Region region;
+  protected final DynamoDB dynamoDB;
+  protected final int maxResultSize;
 
-	public AbstractLambda() {
-		region = Region.getRegion(Regions.fromName(getenv(REGION, DEFAULT_REGION)));
+  public AbstractLambda() {
+    region = Region.getRegion(Regions.fromName(getenv(REGION, DEFAULT_REGION)));
     AmazonDynamoDBClient dynamoClient = new AmazonDynamoDBClient();
     dynamoClient.setRegion(region);
     dynamoDB = new DynamoDB(dynamoClient);

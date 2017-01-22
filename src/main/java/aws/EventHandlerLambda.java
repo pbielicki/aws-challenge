@@ -29,8 +29,6 @@ public class EventHandlerLambda extends AbstractLambda {
   
   @SuppressWarnings("unchecked")
   public void handleEvent(Map<String, Object> req, Context context) {
-    Table table = dynamoDB.getTable("Log");
-    table.putItem(new Item().withPrimaryKey("created", System.currentTimeMillis()).withString("value", String.valueOf(req)));
     Table userEventTable = dynamoDB.getTable(TABLE_USER_EVENT);
     List<Map<String, Object>> request = (List<Map<String, Object>>) req.get(RECORDS);
     request.forEach(record -> {
