@@ -2,6 +2,8 @@
 
 * No throttling of messages per user - can cause OOM
 * No message size verification - can cause OOM
+* No verification for duplicate messages - can easily cause OOM
+* No message sorting by timestamp (is it needed?)
 * Working in AWS sandbox thus not able to send email to any recipient - only to verified ones
 * Sending email notification in scheduled mode - not immediately after collecting the digest
 * Retrying email send after 10 minutes infinitely or until next digest overwrites the old one
