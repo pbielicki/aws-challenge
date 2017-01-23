@@ -8,7 +8,7 @@
 * No message sorting by timestamp (is it needed?)
 * Working in AWS sandbox thus not able to send email to any recipient - only to verified ones
 * Sending email notification in scheduled mode - not immediately after collecting the digest
-* Retrying email send after 10 minutes infinitely or until next digest overwrites the old one
+* Retrying email send after 5 minutes infinitely or until next digest overwrites the old one
 * No email notification max retry / retention / throttling - can blow up DynamoDB with millions of users
 * Your observation goes here... :)
 
@@ -73,7 +73,7 @@ aws sns subscribe \
 --notification-endpoint [EventHandler-arn]
 ~~~~
 
-## Install EventScanner lambda and schedule its execution every 10 minutes
+## Install EventScanner lambda and schedule its execution every 5 minutes
 
 ~~~~
 aws lambda create-function \
@@ -88,19 +88,19 @@ aws lambda create-function \
 ~~~~
 
 ~~~~
-aws events put-rule --schedule-expression 'rate(10 minutes)' --name every_10_minutes
+aws events put-rule --schedule-expression 'rate(5 minutes)' --name every_5_minutes
 ~~~~
 
 ~~~~
 aws lambda add-permission \
 --function-name EventScanner \
---statement-id every_10_minutes_event \
+--statement-id every_5_minutes_scanner \
 --action 'lambda:InvokeFunction' \
 --principal events.amazonaws.com \
 --source-arn [scheduled-rule-arn]
 ~~~~
 
-## Install NotificationSender lambda and schedule its execution every 10 minutes
+## Install NotificationSender lambda and schedule its execution every 5 minutes
 
 ~~~~
 aws lambda create-function \
@@ -117,7 +117,7 @@ aws lambda create-function \
 ~~~~
 aws lambda add-permission \
 --function-name NotificationSender \
---statement-id every_10_minutes_event \
+--statement-id every_5_minutes_sender \
 --action 'lambda:InvokeFunction' \
 --principal events.amazonaws.com \
 --source-arn [scheduled-rule-arn]
