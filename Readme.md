@@ -1,6 +1,7 @@
 ### Technical constraints
 
 * No Unit Tests! well - no time
+* No check for valid Sns message
 * No throttling of messages per user - can cause OOM
 * No message size verification - can cause OOM
 * No verification for duplicate messages - can easily cause OOM
@@ -122,6 +123,11 @@ aws lambda add-permission \
 --source-arn [scheduled-rule-arn]
 ~~~~
 
+I noticed that scheduling Lambda from CLI does not really work. The trigger is displayed in the console UI
+but Lambda is not receiving scheduled events.
+
+The workaround for this is to add `CloudWatch Events - Schedule` from the UI.
+
 ## Apply Identity Policies for each "To" email address that will be used (if AWS sandboxed account)
 
 In sandbox AWS account, you not only have to validate each "From" email address but also you need
@@ -132,17 +138,18 @@ Example of policy:
 
 ~~~~
 {
-    "Version": "2008-10-17",
-    "Statement": [
-        {
-            "Sid": "stmt1485113930894",
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "arn:aws:sts::[account-no]:[lambda-runner-role]/NotificationSender"
-            },
-            "Action": "ses:SendEmail",
-            "Resource": "arn:aws:ses:eu-west-1:817181745424:identity/example@email.com"
-        }
-    ]
+  "Version": "2008-10-17",
+  "Statement": [
+    {
+      "Sid": "stmt1485113930894",
+      "Effect": "Allow",
+      "Principal": {
+         "AWS": "arn:aws:sts::[account-no]:[lambda-runner-role]/NotificationSender"
+      },
+      "Action": "ses:SendEmail",
+      "Resource": "arn:aws:ses:eu-west-1:817181745424:identity/example@email.com"
+    }
+  ]
 }
 ~~~~
+
