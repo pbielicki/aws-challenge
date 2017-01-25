@@ -10,6 +10,7 @@
 * Sending email notification in scheduled mode - not immediately after collecting the digest
 * Retrying email send after 5 minutes infinitely or until next digest overwrites the old one
 * No email notification max retry / retention / throttling - can blow up DynamoDB with millions of users
+* No i18n of day of week (well we depend on JRE)
 * Your observation goes here... :)
 
 ## Clone and build project
